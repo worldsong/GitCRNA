@@ -2,7 +2,7 @@
  * Created by Song on 2018/5/29.
  */
 import React from 'react';
-import {StyleSheet, Text, View, FlatList} from 'react-native';
+import {StyleSheet, Text, View, FlatList, RefreshControl} from 'react-native';
 import NavigationBar from '../components/NavigationBar'
 import ScrollableTabView from 'react-native-scrollable-tab-view'
 
@@ -76,8 +76,17 @@ class PopularTab extends React.Component {
                 data={this.state.dataSource}
                 keyExtractor={this._keyExtractor}
                 renderItem={({item}) => <Text>{item.full_name}</Text>}
-                refreshing = {this.state.isLoading}
-                onRefresh={this.handleRefresh}
+                refreshControl={
+                    <RefreshControl
+                        refreshing={this.state.isLoading}
+                        onRefresh={this.handleRefresh}
+                        tintColor="#63B8FF"
+                        title="正在加载..."
+                        titleColor="#63B8FF"
+                        colors={['red', 'blue','yellow']}
+                        progressBackgroundColor="green"
+                    />
+                }
             />
         )
     }
