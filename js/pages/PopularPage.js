@@ -8,6 +8,12 @@ import ScrollableTabView from 'react-native-scrollable-tab-view'
 
 //包含两块内容，状态栏（静），滚动视图（动）
 export default class PopularPage extends React.Component {
+    constructor(props){
+        super(props)
+        this.state = {
+            languages: ["IOS", "Android", "Java", "JavaScript"]
+        }
+    }
     render() {
         return (
             <View style={styles.container}>
@@ -17,10 +23,11 @@ export default class PopularPage extends React.Component {
                     tabBarActiveTextColor="#FFF"
                     tabBarInactiveTextColor="#F5FFFA"
                     tabBarUnderlineStyle={{backgroundColor:"#E7E7E7",height:2}}>
-                    <PopularTab tabLabel='IOS' />
-                    <PopularTab tabLabel='Android'/>
-                    <Text tabLabel='Java'>JAVA</Text>
-                    <PopularTab tabLabel='Javascript'/>
+                    {
+                        this.state.languages.map((item, i) => {
+                            return (<PopularTab key={`tab${i}`} tabLabel={item} />)
+                        })
+                    }
                 </ScrollableTabView>
             </View>
         );
