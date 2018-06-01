@@ -35,6 +35,9 @@ export default class PopularPage extends React.Component {
 }
 
 class PopularTab extends React.Component {
+    static defaultProps = {
+        tabLabel: 'JavaScript'
+    }
     constructor(props){
         super(props);
         this.state= {
@@ -42,7 +45,7 @@ class PopularTab extends React.Component {
         }
     }
     loadData = ()=> {
-        fetch('https://api.github.com/search/repositories?q=JavaScript&sort=stars')
+        fetch(`https://api.github.com/search/repositories?q=${this.props.tabLabel}&sort=stars`)
             .then(response => response.json())
             .then(json => {
                 console.log(json)
