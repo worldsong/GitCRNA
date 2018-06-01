@@ -10,7 +10,7 @@ export default class PopularPage extends React.Component {
     constructor(props){
         super(props);
         this.state= {
-            dataSource: ['时间的导师', '干净的字迹', '小二']
+            dataSource: [{key:'时间的导师'}, {key:'干净的字迹'}, {key:'小二'}]
         }
     }
     render() {
@@ -19,7 +19,7 @@ export default class PopularPage extends React.Component {
                 <NavigationBar />
                 <FlatList
                     data={this.state.dataSource}
-                    renderItem={({item}) => <Text>{item}</Text>}
+                    renderItem={({item}) => <Text>{item.key}</Text>}
                 />
             </View>
         );
