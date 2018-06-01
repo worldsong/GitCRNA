@@ -41,18 +41,23 @@ class PopularTab extends React.Component {
     constructor(props){
         super(props);
         this.state= {
-            dataSource: [{key:'时间的导师'}, {key:'干净的字迹'}, {key:'小二'}]
+            dataSource: [{key:'时间的导师'}, {key:'干净的字迹'}, {key:'小二'}],
+            isLoading: true
         }
     }
     _keyExtractor = (item, index) => ('' + item.id + index );
-
+    //加载数据
     loadData = ()=> {
+        this.setState({isLoading:true});
+        //请求网络
         fetch(`https://api.github.com/search/repositories?q=${this.props.tabLabel}&sort=stars`)
             .then(response => response.json())
             .then(json => {
                 // console.log(json)
+                //更新dataSource
                 this.setState({
                     dataSource: json.items,
+                    isLoading: false //隐藏进度条
                 })
             }).catch((error) => {
             console.log(error);
@@ -62,12 +67,17 @@ class PopularTab extends React.Component {
     componentDidMount = ()=> {
         this.loadData();
     }
+    handleRefresh=()=>{
+        this.loadData();
+    }
     render(){
         return (
             <FlatList
                 data={this.state.dataSource}
                 keyExtractor={this._keyExtractor}
                 renderItem={({item}) => <Text>{item.full_name}</Text>}
+                refreshing = {this.state.isLoading}
+                onRefresh={this.handleRefresh}
             />
         )
     }
