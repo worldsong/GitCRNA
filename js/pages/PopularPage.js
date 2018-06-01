@@ -41,11 +41,25 @@ class PopularTab extends React.Component {
             dataSource: [{key:'时间的导师'}, {key:'干净的字迹'}, {key:'小二'}]
         }
     }
+    loadData = ()=> {
+        fetch('https://api.github.com/search/repositories?q=JavaScript&sort=stars')
+            .then(response => response.json())
+            .then(json => {
+                console.log(json)
+                this.setState({
+                    dataSource: json.items,
+                })
+            })
+
+    }
+    componentDidMount = ()=> {
+        this.loadData();
+    }
     render(){
         return (
             <FlatList
                 data={this.state.dataSource}
-                renderItem={({item}) => <Text>{item.key}</Text>}
+                renderItem={({item}) => <Text>{item.full_name}</Text>}
             />
         )
     }
