@@ -6,14 +6,12 @@ import {
     View
 } from 'react-native';
 
-import HomePage from "./js/pages/HomePage";
+import Root from './js/pages/setup'
 
 export default class GitCRNA extends Component {
     render() {
         return (
-            <View style={styles.container}>
-                <HomePage/>
-            </View>
+            <Root />
         );
     }
 }
