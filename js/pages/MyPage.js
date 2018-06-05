@@ -3,11 +3,15 @@
  */
 import React from 'react';
 import {StyleSheet, Text, View} from 'react-native';
+import NavigationBar from '../components/NavigationBar'
 
 export default class MyPage extends React.Component {
     render() {
         return (
             <View style={styles.container}>
+                <NavigationBar
+                    title="我的"
+                />
                 <Text>RN开发组件模板</Text>
             </View>
         );

@@ -2,7 +2,7 @@
  * Created by Song on 2018/5/29.
  */
 import React from 'react';
-import {StyleSheet, Text, View, FlatList, RefreshControl} from 'react-native';
+import {StyleSheet, Text, View, FlatList, RefreshControl, TouchableOpacity, Image} from 'react-native';
 import NavigationBar from '../components/NavigationBar'
 import ScrollableTabView from 'react-native-scrollable-tab-view'
 import ProjectRow from '../components/ProjectRow'
@@ -15,10 +15,28 @@ export default class PopularPage extends React.Component {
             languages: ["IOS", "Android", "Java", "JavaScript"]
         }
     }
+    getNavRightBtn = () =>{
+        return (
+            <View style={{flexDirection:'row',alignItems:'center'}}>
+                <TouchableOpacity
+                    activeOpacity={0.7}>
+                    <Image source={require('../../res/images/ic_search_white_48pt.png')} style={{width:24,height:24}}/>
+                </TouchableOpacity>
+
+                <TouchableOpacity
+                    activeOpacity={0.7}>
+                    <Image source={require('../../res/images/ic_more_vert_white_48pt.png')} style={{width:24,height:24}}/>
+                </TouchableOpacity>
+            </View>
+        )
+    }
     render() {
         return (
             <View style={styles.container}>
-                <NavigationBar />
+                <NavigationBar
+                    title="热门"
+                    rightButton={this.getNavRightBtn()}
+                />
                 <ScrollableTabView
                     tabBarBackgroundColor="#63B8FF"
                     tabBarActiveTextColor="#FFF"

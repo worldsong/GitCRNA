@@ -3,9 +3,14 @@
  */
 import React from 'react';
 import {StyleSheet, Text, View, StatusBar, Platform, TouchableOpacity,Image } from 'react-native';
+import PropTypes from 'prop-types';
 
 //会包含状态栏，还有顶部导航栏
 export default class NavigationBar extends React.Component {
+    static propTypes = {
+        rightButton: PropTypes.element,
+        leftButton: PropTypes.element
+    }
     render() {
         return (
             <View style={styles.container}>
@@ -18,20 +23,14 @@ export default class NavigationBar extends React.Component {
                 </View>
                 {/*顶部导航栏*/}
                 <View style={styles.navBar}>
-                    <View style={styles.navBtn}></View>
+                    <View style={styles.leftBtn}>
+                        {this.props.leftButton}
+                    </View>
                     <View style={styles.titleWrapper}>
-                        <Text style={styles.title}>热门</Text>
+                        <Text style={styles.title}>{this.props.title}</Text>
                     </View>
                     <View style={styles.rightBtn}>
-                        <TouchableOpacity
-                            activeOpacity={0.7}>
-                            <Image source={require('../../res/images/ic_search_white_48pt.png')} style={styles.navBtn}/>
-                        </TouchableOpacity>
-
-                        <TouchableOpacity
-                            activeOpacity={0.7}>
-                            <Image source={require('../../res/images/ic_more_vert_white_48pt.png')} style={styles.navBtn}/>
-                        </TouchableOpacity>
+                        {this.props.rightButton}
                     </View>
                 </View>
             </View>
@@ -65,7 +64,7 @@ const styles = StyleSheet.create({
         fontSize:16,
         color:'#FFF'
     },
-    navBtn:{
+    leftBtn:{
         width:24,
         height:24
     },
