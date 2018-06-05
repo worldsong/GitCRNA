@@ -5,6 +5,7 @@ import React from 'react';
 import {StyleSheet, Text, View, FlatList, RefreshControl} from 'react-native';
 import NavigationBar from '../components/NavigationBar'
 import ScrollableTabView from 'react-native-scrollable-tab-view'
+import ProjectRow from '../components/ProjectRow'
 
 //包含两块内容，状态栏（静），滚动视图（动）
 export default class PopularPage extends React.Component {
@@ -70,7 +71,7 @@ class PopularTab extends React.Component {
     handleRefresh=()=>{
         this.loadData();
     }
-    renderRow = ({item}) => <Text>{item.full_name}</Text>
+    renderRow = ({item}) => <ProjectRow item={item} />
 
     render(){
         return (
