@@ -42,7 +42,7 @@ class PopularTab extends React.Component {
     constructor(props){
         super(props);
         this.state= {
-            dataSource: [{key:'时间的导师'}, {key:'干净的字迹'}, {key:'小二'}],
+            dataSource: [],
             isLoading: true
         }
     }
