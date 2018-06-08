@@ -12,6 +12,7 @@ export default class ProjectRow extends React.Component {
         const item = this.props.item;
         return (
             <TouchableOpacity
+                onPress = {this.props.onSelect}
                 activeOpacity={0.5}>
                 <View style={styles.container}>
                     <Text style={styles.title}>{item.full_name}</Text>

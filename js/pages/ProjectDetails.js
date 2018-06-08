@@ -26,20 +26,37 @@ export default class ProjectDetails extends React.Component {
             </TouchableOpacity>
         </View>;
     }
+    getNavRightBtn = ()=>{
+        return <View style={{flexDirection:'row'}}>
+            <TouchableOpacity activeOpacity={0.5}>
+                <Image
+                    style={{width:20,height:20,marginRight:10,tintColor:'#FFF'}}
+                    source={require('../../res/images/ic_share.png')}/>
+            </TouchableOpacity>
+
+            <TouchableOpacity activeOpacity={0.5}>
+                <Image
+                    style={{width:20,height:20,marginRight:10,tintColor:'#FFF'}}
+                    source={require('../../res/images/ic_unstar_transparent.png')}/>
+            </TouchableOpacity>
+        </View>;
+    }
     handleNavStateChange = (s) => {
+        //当前WebView是否能够返回,存入状态
         this.setState({canGoBack: s.canGoBack})
     }
     render() {
         return (
             <View style={styles.container}>
                 <NavigationBar
-                    title="项目详情页"
+                    title={this.props.title}
                     leftButton={this.getNavLeftBtn()}
+                    rightButton={this.getNavRightBtn()}
                 />
                 <WebView
                     ref="webview"
                     startInLoadingState={true}
-                    source={{uri:'http://songfens.club'}}
+                    source={{uri:this.props.url}}
                     onNavigationStateChange={this.handleNavStateChange}
                 />
             </View>

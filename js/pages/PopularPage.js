@@ -6,6 +6,7 @@ import {StyleSheet, Text, View, FlatList, RefreshControl, TouchableOpacity, Imag
 import NavigationBar from '../components/NavigationBar'
 import ScrollableTabView from 'react-native-scrollable-tab-view'
 import ProjectRow from '../components/ProjectRow'
+import ProjectDetails from './ProjectDetails';
 
 var popular_def_lans = require('../../res/data/popular_def_lans.json');
 
@@ -40,7 +41,7 @@ export default class PopularPage extends React.Component {
     loadLanguages = ()=>{
         AsyncStorage.getItem('custom_key')
             .then((value)=>{
-                alert(value)
+                // alert(value)
                 if(value != null){
                     this.setState({languages:JSON.parse(value)});
                 }
@@ -109,7 +110,14 @@ class PopularTab extends React.Component {
     handleRefresh=()=>{
         this.loadData();
     }
-    renderRow = ({item}) => <ProjectRow item={item} />
+    // 项目被选中，跳转到项目详情页面
+    handleProjectSelect = (obj) => {
+        this.props.navigator.push({
+            component: ProjectDetails,
+            params:{title:obj.full_name, url:obj.html_url}
+        })
+    }
+    renderRow = ({item}) => <ProjectRow item={item} onSelect={()=>this.handleProjectSelect(item)} />
 
     render(){
         return (
