@@ -6,10 +6,14 @@ import {StyleSheet, Text, View, FlatList, RefreshControl, TouchableOpacity, Imag
 import NavigationBar from '../components/NavigationBar'
 import ScrollableTabView from 'react-native-scrollable-tab-view'
 import GitHubTrending from 'GitHubTrending';
+import TrendingProjectRow from "../components/TrendingProjectRow";
+import ProjectDetails from './ProjectDetails';
+
 
 var popular_def_lans = require('../../res/data/popular_def_lans.json');
 
-export default class TrendingPage extends React.Component {
+//包含两块内容，状态栏（静），滚动视图（动）
+export default class PopularPage extends React.Component {
     constructor(props){
         super(props)
         this.state = {
@@ -24,12 +28,12 @@ export default class TrendingPage extends React.Component {
     loadLanguages = ()=>{
         AsyncStorage.getItem('custom_key')
             .then((value)=>{
+                // alert(value)
                 if(value != null){
                     this.setState({languages:JSON.parse(value)});
                 }
             });
     }
-
     render() {
         return (
             <View style={styles.container}>
@@ -50,8 +54,8 @@ export default class TrendingPage extends React.Component {
             </View>
         );
     }
-    componentDidMount = ()=> {
-        // 读取数据
+    componentDidMount = ()=>{
+        //读取数据
         this.loadLanguages();
     }
 }
@@ -68,24 +72,40 @@ class TrendingTab extends React.Component {
         }
     }
     _keyExtractor = (item, index) => ('' + item.id + index );
-    // 加载数据
-    loadData = () => {
-        this.setState({isLoading: true});
-        // 请求网络
+    //加载数据
+    loadData = ()=> {
+        this.setState({isLoading:true});
+        //请求网络
         new GitHubTrending().fetchTrending(`https://github.com/trending/${this.props.tabLabel}?since=daily`)
             .then(json => {
+                // console.log(json)
+                //更新dataSource
                 this.setState({
-                    dataSource:json,
-                    isLoading: false // 隐藏进度条
+                    dataSource: json,
+                    isLoading: false //隐藏进度条
                 })
             }).catch((error) => {
-            console.log(error)
+            console.log(error);
         }).done();
+
     }
-    handleRefresh = () => {
+    componentDidMount = ()=> {
         this.loadData();
     }
-    renderRow =({item}) => <Text>{item.fullName}</Text>
+    handleRefresh=()=>{
+        this.loadData();
+    }
+
+    //项目被选中，跳转到详情页
+    handleProjectSelect = (obj)=>{
+        //console.log(obj);
+        this.props.navigator.push({
+            component:ProjectDetails,
+            params:{title:obj.fullName,url:`https://github.com${obj.url}`}
+        });
+    }
+    renderRow = ({item}) => <TrendingProjectRow item={item} onSelect={()=>this.handleProjectSelect(item)} />
+
     render(){
         return (
             <FlatList
@@ -105,9 +125,6 @@ class TrendingTab extends React.Component {
                 }
             />
         )
-    }
-    componentDidMount = () => {
-        this.loadData();
     }
 }
 const styles = StyleSheet.create({
