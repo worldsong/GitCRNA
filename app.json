@@ -1,5 +1,15 @@
 {
   "expo": {
-    "sdkVersion": "27.0.0"
+    "sdkVersion": "27.0.0",
+    "name": "gitCRNA",
+    "icon": "./images/logo.png",
+    "version": "1.0.0",
+    "slug": "schedule_logs",
+    "ios": {
+      "bundleIdentifier": "club.songfens.www"
+    },
+    "android": {
+      "package": "club.songfens.www"
+    }
   }
 }
